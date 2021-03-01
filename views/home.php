@@ -3,18 +3,11 @@
  * Created by PhpStorm
  * User: bartosz
  * Date: 01.03.2021
- * Time: 14:03
+ * Time: 18:15
  */
-require_once 'vendor/autoload.php';
-require_once 'config/AuthController.php';
-
+require __DIR__.'\..\config\AuthController.php';
 $authObj = new AuthController();
-if ($authObj->isUserLoggedIn()) {
-    $authObj->logoutUser();
-    header('Location: index.php');
-}
 ?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -40,7 +33,7 @@ if ($authObj->isUserLoggedIn()) {
 
 
 
-    <a class="btn btn-outline-primary" id="login-btn" href="aurora/login">
+    <a class="btn btn-outline-primary" id="login-btn" href="/aurora/login">
         <?php if ($authObj->isUserLoggedIn()) {
             echo "Logout";
         } else {
@@ -50,15 +43,16 @@ if ($authObj->isUserLoggedIn()) {
     </a>
 </header>
 
-<main class="form-signin">
-        <form>
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-            <label for="inputEmail" class="visually-hidden">Email address</label>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <label for="inputPassword" class="visually-hidden">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-        </form>
+<main id="maincontent" class="container">
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+        <h1 class="display-4">Welcome in simple article manager </h1>
+        <p class="lead">Select what you want to do in the header menu</p>
+        <input type="hidden" id="isLoggedIn" value="<?php if ($authObj->isUserLoggedIn()) {
+            echo "true";
+        } else {
+            echo "false";
+        } ?>">
+    </div>
 
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
@@ -72,3 +66,4 @@ if ($authObj->isUserLoggedIn()) {
 
 </body>
 </html>
+

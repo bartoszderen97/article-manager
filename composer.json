@@ -1,7 +1,8 @@
 {
     "require": {
-        "altorouter/altorouter": "^2.0",
         "rakit/validation": "^1.4",
-        "delight-im/auth": "^8.2"
+        "delight-im/auth": "^8.2",
+        "league/plates": "^3.4",
+        "pecee/simple-router": "4.2.0.6"
     }
 }

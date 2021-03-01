@@ -1,5 +1,6 @@
 <?php
 
+require __DIR__.'/../vendor/autoload.php';
 use Delight\Auth\AttemptCancelledException;
 use Delight\Auth\Auth;
 use Delight\Auth\AuthError;
@@ -10,8 +11,7 @@ use Delight\Auth\NotLoggedInException;
 use Delight\Auth\TooManyRequestsException;
 use Delight\Auth\UserAlreadyExistsException;
 
-require '../vendor/autoload.php';
-require 'DbConnection.php';
+require_once 'DbConnection.php';
 
 class AuthController
 {
