@@ -1,6 +1,8 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../config/DbConnection.php';
+
 use Delight\Auth\AttemptCancelledException;
 use Delight\Auth\Auth;
 use Delight\Auth\AuthError;
@@ -10,13 +12,13 @@ use Delight\Auth\InvalidPasswordException;
 use Delight\Auth\NotLoggedInException;
 use Delight\Auth\TooManyRequestsException;
 use Delight\Auth\UserAlreadyExistsException;
+use Rakit\Validation\Validator;
 
-require_once 'DbConnection.php';
 
 class AuthController
 {
     private Auth $auth;
-
+    public const AUTH_SUCCESS = "OK";
     public function __construct()
     {
         $db = new DbConnection();
@@ -27,64 +29,98 @@ class AuthController
      * @param string $username
      * @param string $email
      * @param string $password
+     * @return array|string
      */
     public function registerUser(string $username, string $email, string $password)
     {
+        $validator = new Validator();
+        $validation = $validator->validate($_POST, [
+            'username'              => 'required|alpha_num',
+            'email'                 => 'required|email',
+            'password'              => 'required|min:6',
+            'password_confirm'      => 'required|same:password'
+        ]);
+
+        if ($validation->fails()) {
+            $errors = $validation->errors();
+            var_dump($errors->firstOfAll());
+            return $errors->firstOfAll();
+        }
+
         try {
             $this->auth->register($email, $password, $username);
+            return self::AUTH_SUCCESS;
         }
         catch (InvalidEmailException $e) {
-            die('Invalid email address');
+            return 'Invalid email address';
         }
         catch (InvalidPasswordException $e) {
-            die('Invalid password');
+            return 'Invalid password';
         }
         catch (UserAlreadyExistsException $e) {
-            die('User already exists');
+            return'User already exists';
         }
         catch (TooManyRequestsException $e) {
-            die('Too many requests');
+            return 'Too many requests';
         }
         catch (AuthError $e) {
-            die('Auth error');
+            return 'Auth error';
         }
     }
 
+    /**
+     * @param string $email
+     * @param string $password
+     * @return array|string
+     */
     public function loginUser(string $email, string $password)
     {
+        $validator = new Validator();
+        $validation = $validator->validate($_POST, [
+            'email'                 => 'required|email',
+            'password'              => 'required|min:6'
+        ]);
+
+        if ($validation->fails()) {
+            $errors = $validation->errors();
+            return $errors->firstOfAll();
+        }
+
         try {
             $this->auth->login($email, $password);
+            return self::AUTH_SUCCESS;
         }
         catch (InvalidEmailException $e) {
-            die('Wrong email address');
+            return 'Wrong email address';
         }
         catch (InvalidPasswordException $e) {
-            die('Wrong password');
+            return 'Wrong password';
         }
         catch (EmailNotVerifiedException $e) {
-            die('Email not verified');
+            return 'Email not verified';
         }
         catch (TooManyRequestsException $e) {
-            die('Too many requests');
+            return 'Too many requests';
         }
         catch (AttemptCancelledException $e) {
-            die('Attempt cancelled');
+            return 'Attempt cancelled';
         }
         catch (AuthError $e) {
-            die('Auth error');
+            return 'Auth error';
         }
     }
 
-    public function logoutUser()
+    public function logoutUser(): string
     {
         try {
             $this->auth->logOutEverywhere();
+            return self::AUTH_SUCCESS;
         }
         catch (NotLoggedInException $e) {
-            die('Not logged in');
+            return 'Not logged in';
         }
         catch (AuthError $e) {
-            die('Auth error');
+            return 'Auth error';
         }
     }
 

@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm
  * User: bartosz
- * Date: 01.03.2021
- * Time: 14:03
+ * Date: 05.03.2021
+ * Time: 17:53
  */
 require_once 'vendor/autoload.php';
 require_once 'controllers/AuthController.php';
@@ -39,7 +39,7 @@ if ($authObj->isUserLoggedIn()) {
 
 
 
-    <a class="btn btn-outline-primary" id="login-btn" href="">
+    <a class="btn btn-outline-primary" id="login-btn" href="/aurora/login">
         <?php if ($authObj->isUserLoggedIn()) {
             echo "Logout";
         } else {
@@ -50,7 +50,13 @@ if ($authObj->isUserLoggedIn()) {
 
 <main class="form-signin">
     <form method="post">
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+        <label for="inputUsername"
+               class="visually-hidden">
+            Username
+        </label>
+        <input type="text" name="username" id="inputUsername"
+               class="form-control" placeholder="Username" required>
         <label for="inputEmail"
                class="visually-hidden">
             Email address
@@ -63,10 +69,16 @@ if ($authObj->isUserLoggedIn()) {
         </label>
         <input type="password" name="password" id="inputPassword"
                class="form-control" placeholder="Password" required>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+        <label for="inputPasswordConfirm"
+               class="visually-hidden">
+            Password confirmation
+        </label>
+        <input type="password" name="password_confirm" id="inputPasswordConfirm"
+               class="form-control" placeholder="Password confirmation" required>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
     </form>
 
-    <a href="/aurora/register">Zarejestruj się</a>
+    <a href="/aurora/login">Zaloguj się</a>
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
         <div class="row">

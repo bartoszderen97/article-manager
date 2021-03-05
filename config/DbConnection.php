@@ -28,4 +28,15 @@ class DbConnection
     {
         return $this->db;
     }
+
+    public function getConnectionMysql()
+    {
+        $conn = mysqli_connect(self::DB_HOST, self::DB_USERNAME, self::DB_PASSWORD,
+            self::DB_NAME);
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+
+        return $conn;
+    }
 }

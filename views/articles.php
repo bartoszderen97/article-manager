@@ -2,10 +2,12 @@
 /**
  * Created by PhpStorm
  * User: bartosz
- * Date: 01.03.2021
- * Time: 18:15
+ * Date: 05.03.2021
+ * Time: 18:51
  */
 require_once __DIR__ . '\..\controllers\AuthController.php';
+$articlesJson = $this->e($data);
+$articles = json_decode(html_entity_decode($articlesJson), true);
 $authObj = new AuthController();
 ?>
 <!doctype html>
@@ -44,15 +46,46 @@ $authObj = new AuthController();
 </header>
 
 <main id="maincontent" class="container">
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Welcome in simple article manager </h1>
-        <p class="lead">Select what you want to do in the header menu</p>
-        <input type="hidden" id="isLoggedIn" value="<?php if ($authObj->isUserLoggedIn()) {
-            echo "true";
-        } else {
-            echo "false";
-        } ?>">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-1">
+            <b>Id</b>
+        </div>
+        <div class="col-md-1">
+            <b>Status</b>
+        </div>
+        <div class="col-md-2">
+            <b>Title</b>
+        </div>
+        <div class="col-md-6">
+            <b>Description</b>
+        </div>
+        <div class="col-md-2">
+            <b>Actions</b>
+        </div>
     </div>
+    <?php foreach ($articles as $article): ?>
+        <div class="row">
+            <div class="col-md-1">
+                <b><?php echo $article['id']; ?></b>
+            </div>
+            <div class="col-md-1">
+                <b><?php echo $article['status_name']; ?></b>
+            </div>
+            <div class="col-md-2">
+                <b><?php echo $article['title']; ?></b>
+            </div>
+            <div class="col-md-6">
+                <b><?php echo $article['description']; ?></b>
+            </div>
+            <div class="col-md-2">
+                <a href="/aurora/editarticle/<?php echo $article['id'] ?>">Edit</a>
+                <a href="/aurora/deletearticle/<?php echo $article['id'] ?>">Delete</a>
+            </div>
+        </div>
+    <?php endforeach; ?>
+</div>
 
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">

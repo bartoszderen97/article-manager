@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 01 Mar 2021, 14:58
+-- Czas generowania: 05 Mar 2021, 21:26
 -- Wersja serwera: 10.4.16-MariaDB
 -- Wersja PHP: 7.4.12
 
@@ -33,6 +33,15 @@ CREATE TABLE `articles` (
   `description` text NOT NULL,
   `status_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `articles`
+--
+
+INSERT INTO `articles` (`id`, `title`, `description`, `status_id`) VALUES
+(2, '22sssssdfffffff', 'iiiihhhhhhhrrrrrrr', 1),
+(3, 'hhhhhhh', 'ppppppp', 2),
+(4, 'mmmmmmmmm', 'eeeeeee', 1);
 
 -- --------------------------------------------------------
 
@@ -68,6 +77,14 @@ CREATE TABLE `statuses` (
   `status_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Zrzut danych tabeli `statuses`
+--
+
+INSERT INTO `statuses` (`id`, `status_name`) VALUES
+(1, 'acy'),
+(2, 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -93,7 +110,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(1, 'mmmm@rw.pl', '$2y$10$eGS0DHznq5LuRvmHoIZMQOMY7KZb/O.it.f9.DZX4kQe5ofEd24wu', 'abc', 0, 1, 1, 0, 1614603425, 1614603451, 0);
+(1, 'mmmm@rw.pl', '$2y$10$eGS0DHznq5LuRvmHoIZMQOMY7KZb/O.it.f9.DZX4kQe5ofEd24wu', 'abc', 0, 1, 1, 0, 1614603425, 1614603451, 1),
+(2, 'kmmmm@rw.pl', '$2y$10$/yL2QmKjlZ1VguUsJh2XYuzOiI5SnfVD7yvNklkKcv0g1ab4fjoZm', 'uruk', 0, 1, 1, 0, 1614608133, 1614608214, 3),
+(4, 'adam@we.k', '$2y$10$HiH7AiovHnT2jbGf5BsccO6y2mRMGENQfa.LK6xf8XjMbrKwgTbnC', 'bartoszderen', 0, 1, 1, 0, 1614973593, 1614973742, 0);
 
 -- --------------------------------------------------------
 
@@ -156,8 +175,10 @@ CREATE TABLE `users_throttling` (
 --
 
 INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
-('QduM75nGblH2CDKFyk0QeukPOwuEVDAUFE54ITnHM38', 72.0072, 1614603451, 1615143451),
-('PZ3qJtO_NLbJfRIP-8b4ME4WA3xxc6n9nbCORSffyQ0', 4, 1614603425, 1615035425);
+('QduM75nGblH2CDKFyk0QeukPOwuEVDAUFE54ITnHM38', 65.9825, 1614973742, 1615513742),
+('PZ3qJtO_NLbJfRIP-8b4ME4WA3xxc6n9nbCORSffyQ0', 3.31898, 1614973593, 1615405593),
+('OMhkmdh1HUEdNPRi-Pe4279tbL5SQ-WMYf551VVvH8U', 19, 1614959501, 1614995501),
+('-jhhweJYxe84yDFzSqBCTDi3AMifJd1LHQD5ZPe8L-c', 499, 1614959501, 1615132301);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -237,7 +258,7 @@ ALTER TABLE `users_throttling`
 -- AUTO_INCREMENT dla tabeli `articles`
 --
 ALTER TABLE `articles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `articles_has_categories`
@@ -255,13 +276,13 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT dla tabeli `statuses`
 --
 ALTER TABLE `statuses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT dla tabeli `users_confirmations`
